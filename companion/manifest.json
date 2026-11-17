@@ -1,14 +1,14 @@
 {
 	"$schema": "../node_modules/@companion-module/base/assets/manifest.schema.json",
 	"type": "connection",
-	"id": "dannyhd-pptpresent",
-	"name": "dannyhd-pptpresent",
+	"id": "avteknikk-pptpresent",
+	"name": "avteknikk-pptpresent",
 	"shortname": "pptpresent",
 	"description": "Control PPTPresent (PowerPoint presenting with NDI overlay) over OSC, with feedback",
 	"version": "0.0.0",
 	"license": "MIT",
-	"repository": "git+https://github.com/DannyHD001/companion-module-dannyhd-pptpresent.git",
-	"bugs": "https://github.com/DannyHD001/companion-module-dannyhd-pptpresent/issues",
+	"repository": "git+https://github.com/DannyHD001/companion-module-avteknikk-pptpresent.git",
+	"bugs": "https://github.com/DannyHD001/companion-module-avteknikk-pptpresent/issues",
 	"maintainers": [
 		{
 			"name": "Danny HD",
@@ -22,7 +22,7 @@
 		"entrypoint": "../dist/main.js"
 	},
 	"legacyIds": [],
-	"manufacturer": "DannyHD",
+	"manufacturer": "AVteknikk",
 	"products": ["PPTPresent"],
 	"keywords": ["PowerPoint", "Slides", "Presentation", "Timer", "NDI", "OSC"]
 }

@@ -1,6 +1,6 @@
 {
-	"name": "dannyhd-pptpresent",
-	"version": "0.2.1",
+	"name": "avteknikk-pptpresent",
+	"version": "1.0.0",
 	"description": "Bitfocus Companion module for PPTPresent, over OSC",
 	"main": "dist/main.js",
 	"type": "module",
@@ -17,7 +17,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/DannyHD001/companion-module-dannyhd-pptpresent.git"
+		"url": "git+https://github.com/DannyHD001/companion-module-avteknikk-pptpresent.git"
 	},
 	"engines": {
 		"node": "^22",
