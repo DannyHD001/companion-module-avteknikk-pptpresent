@@ -1,34 +1,7 @@
-# companion-module-dannyhd-pptpresent
-
 A [Bitfocus Companion](https://bitfocus.io/companion) module that controls PPTPresent over OSC: the slide show,
 slides, presentations, the speaker timer, the outputs and which screen each output is on. It has feedbacks,
 variables for every value PPTPresent reports, and presets. User help is in [companion/HELP.md](companion/HELP.md).
 
-Needs Companion 5.0 or later (module API 2.1), and PPTPresent 0.1.8 or later for choosing screens.
-
-## Use it in Companion
-
-**From the package:** run `yarn package`, then in Companion open **Modules › Import module package** and
-choose `dannyhd-pptpresent-<version>.tgz`.
-
-**As a developer module** (reloads when you rebuild):
-
-1. `yarn install` and `yarn build` in this folder (`yarn dev` rebuilds on every change).
-2. In the Companion launcher click the cog, and under **Developer** set the **Developer modules path** to the
-   folder that _contains_ this one, then turn on **Enable Developer Modules**.
-3. Launch the GUI and add a **PPTPresent** connection.
-
-## Develop
-
-Yarn 4 comes through corepack: `corepack yarn install` if `yarn` is not on the path.
-
-| Script                     | Does                                                               |
-| -------------------------- | ------------------------------------------------------------------ |
-| `yarn build`               | Compile `src/` to `dist/`                                          |
-| `yarn dev`                 | Compile on every change                                            |
-| `yarn lint`, `yarn format` | ESLint, Prettier                                                   |
-| `yarn check`               | Validate `companion/manifest.json`                                 |
-| `yarn package`             | Build `dannyhd-pptpresent-<version>.tgz` for import into Companion |
 
 ## PPTPresent's OSC protocol
 
