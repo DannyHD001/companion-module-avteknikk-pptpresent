@@ -40,6 +40,9 @@ export type ActionsSchema = {
 	timer_add: { options: { seconds: number } }
 	output: { options: { output: OutputId; state: 'on' | 'off' | 'toggle' } }
 	video: { options: { mode: 'play' | 'pause' | 'toggle' | 'restart' } }
+	scroll: { options: { mode: 'play' | 'pause' | 'toggle' | 'restart' } }
+	scroll_speed: { options: { mode: 'faster' | 'slower' | 'normal' } }
+	scroll_speed_set: { options: { percent: number } }
 	refresh: { options: Record<string, never> }
 }
 
@@ -204,6 +207,54 @@ export function UpdateActions(self: ModuleInstance): void {
 				},
 			],
 			callback: (action) => self.send(`/video/${action.options.mode}`),
+		},
+		scroll: {
+			name: 'Scrolling text: pause / carry on / start again',
+			description:
+				'Scrolling text (lyrics, a ticker) on the slide on screen (PPTPresent 0.1.23 or later). Start again scrolls it from the beginning.',
+			options: [
+				{
+					id: 'mode',
+					type: 'dropdown',
+					label: 'Do',
+					default: 'toggle',
+					choices: [
+						{ id: 'play', label: 'Carry on' },
+						{ id: 'pause', label: 'Pause' },
+						{ id: 'toggle', label: 'Pause or carry on (toggle)' },
+						{ id: 'restart', label: 'Start again from the beginning' },
+					],
+				},
+			],
+			callback: (action) => self.send(`/scroll/${action.options.mode}`),
+		},
+		scroll_speed: {
+			name: 'Scrolling text: faster / slower',
+			description:
+				'Faster and slower change the speed by 10 % of the speed set in the designer (from 20 % to 300 %). Each new slide starts at its own speed.',
+			options: [
+				{
+					id: 'mode',
+					type: 'dropdown',
+					label: 'Do',
+					default: 'faster',
+					choices: [
+						{ id: 'faster', label: 'Faster (+10 %)' },
+						{ id: 'slower', label: 'Slower (−10 %)' },
+						{ id: 'normal', label: 'As designed (100 %)' },
+					],
+				},
+			],
+			callback: (action) => self.send(`/scroll/${action.options.mode}`),
+		},
+		scroll_speed_set: {
+			name: 'Scrolling text: set speed',
+			description: 'The speed in percent of the speed set in the designer: 100 is as designed, 50 half as fast',
+			options: [{ id: 'percent', type: 'number', label: 'Percent', default: 100, min: 20, max: 300, step: 5 }],
+			callback: (action) => {
+				const p = Number(action.options.percent)
+				if (Number.isFinite(p) && p > 0) self.send('/scroll/speed', [Math.round(Math.min(300, Math.max(20, p)))])
+			},
 		},
 		refresh: {
 			name: 'Refresh feedback',

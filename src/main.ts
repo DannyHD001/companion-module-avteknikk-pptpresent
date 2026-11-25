@@ -244,6 +244,12 @@ export default class ModuleInstance extends InstanceBase<ModuleSchema> {
 			else if (k === 'presentation_cued_number') ids.add('presentation_cued')
 			else if (k === 'timer_running') ids.add('timer_running')
 			else if (k === 'timer_state') ids.add('timer_state')
+			else if (k === 'video_loaded' || k === 'video_playing')
+				ids.add('video_loaded').add('video_playing').add('video_ending')
+			else if (k === 'video_remaining') ids.add('video_ending')
+			else if (k === 'scroll_active') ids.add('scroll_active').add('scroll_paused').add('scroll_speed_changed')
+			else if (k === 'scroll_paused') ids.add('scroll_paused')
+			else if (k === 'scroll_speed') ids.add('scroll_speed_changed')
 			else if (k.startsWith('output_') && k.includes('_screen')) ids.add('output_screen')
 			else if (k.startsWith('output_')) ids.add('output_on')
 		}

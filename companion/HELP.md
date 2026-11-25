@@ -1,6 +1,6 @@
 ## PPTPresent
 
-Controls PPTPresent, an app for presenting PowerPoint decks, designer slideshows and video clips with an NDI overlay to screens and NDI, over OSC: slide show, slides, presentations, video clips, the speaker timer and the outputs, with feedback. Needs PPTPresent 0.1.8 or later for choosing screens, and 0.1.17 or later for video clips.
+Controls PPTPresent, an app for presenting PowerPoint decks, designer slideshows and video clips with an NDI overlay to screens and NDI, over OSC: slide show, slides, presentations, video clips, scrolling text, the speaker timer and the outputs, with feedback. Needs PPTPresent 0.1.8 or later for choosing screens, 0.1.17 or later for video clips, and 0.1.23 or later for scrolling text.
 
 ### Setup
 
@@ -20,13 +20,15 @@ The connection turns green once PPTPresent answers. PPTPresent only sends values
 - **Presentation: cue above / below**, **Presentation: cue number**, **Presentation: take cued**
 - **Timer: start / stop / reset**, **Timer: add or take away time** (negative takes time away)
 - **Video: play / pause / restart**: play (starts the show if it is not running), pause, play or pause, or back to the start of the loaded video clip
+- **Scrolling text: pause / carry on / start again**: the scrolling text (lyrics, a ticker) on the slide on screen
+- **Scrolling text: faster / slower**: 10 % faster or slower, or back to the speed set in the designer; **Scrolling text: set speed**: a speed in percent (20–300). Each new slide starts at its own speed
 - **Output: on / off** for the program screen, speaker notes screen and NDI output
 - **Output: show on screen**: put the program or the speaker notes on one of the PPTPresent computer's screens, in a window, or off. The screen list fills in from PPTPresent once connected and follows screens being plugged in or out; type a number to pick that screen of the list instead
 - **Refresh feedback**
 
 ### Feedbacks
 
-Connected, slide show running, slide show is on slide n, presentation n is loaded, a presentation (or presentation n) is cued, timer running, timer state (normal, warn, over), video clip loaded, video is playing, video time left below n seconds, output is on, output is on screen.
+Connected, slide show running, slide show is on slide n, presentation n is loaded, a presentation (or presentation n) is cued, timer running, timer state (normal, warn, over), video clip loaded, video is playing, video time left below n seconds, scrolling text on screen, scrolling text paused, scrolling text faster or slower than designed, output is on, output is on screen.
 
 ### Variables
 
@@ -41,6 +43,7 @@ Connected, slide show running, slide show is on slide n, presentation n is loade
 | `clock`                                                                           | time of day on the PPTPresent computer                                                      |
 | `video_loaded`, `video_playing`                                                   | true when the loaded presentation is a video clip, and while it plays                       |
 | `video_time`, `video_remaining`                                                   | where the clip is ("1:05") and the time left ("-2:10")                                      |
+| `scroll_active`, `scroll_paused`, `scroll_speed`                                  | true when the slide on screen has scrolling text, while it is paused, its speed in percent  |
 | `output_program`, `output_speaker`, `output_ndi`                                  | true when that output is on                                                                 |
 | `output_program_screen`, `output_program_screen_name`, `output_program_screen_id` | number in the list (0 in a window or off), name, display id of the screen the program is on |
 | `output_speaker_screen`, `output_speaker_screen_name`, `output_speaker_screen_id` | the same for the speaker notes                                                              |
@@ -48,7 +51,7 @@ Connected, slide show running, slide show is on slide n, presentation n is loade
 
 ### Presets
 
-Ready-made buttons for the show, slides, presentations (cue 1–10, take), video clips (play/pause with the time, play, pause, back to the start, time left that turns red in the last 10 seconds), the timer (display that turns yellow and red, start/stop, reset, ±10/30/60 s), the outputs, a button per screen for the program and the speaker notes (green where it is shown), the clock and the connection status.
+Ready-made buttons for the show, slides, presentations (cue 1–10, take), video clips (play/pause with the time, play, pause, back to the start, time left that turns red in the last 10 seconds), scrolling text (pause/carry on, start again, slower and faster with the speed, back to the designed speed; blue while there is scrolling text, amber when paused or not at the designed speed), the timer (display that turns yellow and red, start/stop, reset, ±10/30/60 s), the outputs, a button per screen for the program and the speaker notes (green where it is shown), the clock and the connection status.
 
 ### Several connections on one port
 

@@ -25,6 +25,9 @@ export type FeedbacksSchema = {
 	video_loaded: { type: 'boolean'; options: Record<string, never> }
 	video_playing: { type: 'boolean'; options: Record<string, never> }
 	video_ending: { type: 'boolean'; options: { seconds: number } }
+	scroll_active: { type: 'boolean'; options: Record<string, never> }
+	scroll_paused: { type: 'boolean'; options: Record<string, never> }
+	scroll_speed_changed: { type: 'boolean'; options: Record<string, never> }
 	output_on: { type: 'boolean'; options: { output: OutputId } }
 	output_screen: { type: 'boolean'; options: { output: ScreenOutputId; screen: string } }
 }
@@ -137,6 +140,29 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				const left = secondsLeft(s.video_remaining)
 				return s.video_loaded && s.video_playing && left !== null && left < Number(fb.options.seconds)
 			},
+		},
+		scroll_active: {
+			type: 'boolean',
+			name: 'Scrolling text on screen',
+			description: 'The slide on screen has scrolling text',
+			defaultStyle: { bgcolor: COLORS.blue, color: COLORS.white },
+			options: [],
+			callback: () => s.scroll_active,
+		},
+		scroll_paused: {
+			type: 'boolean',
+			name: 'Scrolling text paused',
+			defaultStyle: { bgcolor: COLORS.amber, color: COLORS.black },
+			options: [],
+			callback: () => s.scroll_active && s.scroll_paused,
+		},
+		scroll_speed_changed: {
+			type: 'boolean',
+			name: 'Scrolling text faster or slower than designed',
+			description: 'The speed is not 100 %',
+			defaultStyle: { bgcolor: COLORS.amber, color: COLORS.black },
+			options: [],
+			callback: () => s.scroll_active && s.scroll_speed !== 100,
 		},
 		output_on: {
 			type: 'boolean',

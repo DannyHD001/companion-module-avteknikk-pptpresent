@@ -1,6 +1,6 @@
 {
 	"name": "avteknikk-pptpresent",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "Bitfocus Companion module for PPTPresent, over OSC",
 	"main": "dist/main.js",
 	"type": "module",

@@ -162,6 +162,46 @@ export function UpdatePresets(self: ModuleInstance): void {
 		],
 	)
 
+	// Scrolling text
+	const scrollOn = {
+		feedbackId: 'scroll_active',
+		options: {},
+		style: { bgcolor: COLORS.blue, color: COLORS.white },
+	} as const
+	presets.scroll_toggle = button(
+		'Pause or carry on the scrolling text',
+		'❚❚ ▶\\nSCROLL',
+		[{ actionId: 'scroll', options: { mode: 'toggle' } }],
+		[scrollOn, { feedbackId: 'scroll_paused', options: {}, style: { bgcolor: COLORS.amber, color: COLORS.black } }],
+	)
+	presets.scroll_restart = button(
+		'Start the scrolling text again from the beginning',
+		'⏮\\nSCROLL',
+		[{ actionId: 'scroll', options: { mode: 'restart' } }],
+		[scrollOn],
+	)
+	presets.scroll_slower = button(
+		'Scrolling text 10 % slower',
+		'SLOWER\\n' + v('scroll_speed') + '%',
+		[{ actionId: 'scroll_speed', options: { mode: 'slower' } }],
+		[scrollOn],
+	)
+	presets.scroll_faster = button(
+		'Scrolling text 10 % faster',
+		'FASTER\\n' + v('scroll_speed') + '%',
+		[{ actionId: 'scroll_speed', options: { mode: 'faster' } }],
+		[scrollOn],
+	)
+	presets.scroll_normal = button(
+		'Scrolling text at the speed set in the designer (amber when it is not)',
+		'SPEED\\n' + v('scroll_speed') + '%',
+		[{ actionId: 'scroll_speed', options: { mode: 'normal' } }],
+		[
+			scrollOn,
+			{ feedbackId: 'scroll_speed_changed', options: {}, style: { bgcolor: COLORS.amber, color: COLORS.black } },
+		],
+	)
+
 	// Outputs
 	const outputs = [
 		['program', 'PROGRAM'],
@@ -275,6 +315,20 @@ export function UpdatePresets(self: ModuleInstance): void {
 					name: 'Video clips',
 					description: 'Blue: a video is loaded. Green: it plays. Red: in its last 10 seconds.',
 					presets: ['video_toggle', 'video_play', 'video_pause', 'video_restart', 'video_remaining'],
+				},
+			],
+		},
+		{
+			id: 'scroll',
+			name: 'Scrolling text',
+			definitions: [
+				{
+					id: 'scroll_main',
+					type: 'simple',
+					name: 'Scrolling text',
+					description:
+						'Lyrics or a ticker on the slide on screen. Blue: it has scrolling text. Amber: paused, or not at the designed speed.',
+					presets: ['scroll_toggle', 'scroll_restart', 'scroll_slower', 'scroll_faster', 'scroll_normal'],
 				},
 			],
 		},

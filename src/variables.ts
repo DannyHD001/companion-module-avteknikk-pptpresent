@@ -23,6 +23,9 @@ export type VariablesSchema = {
 	video_playing: boolean
 	video_time: string
 	video_remaining: string
+	scroll_active: boolean
+	scroll_paused: boolean
+	scroll_speed: number
 	output_program: boolean
 	output_speaker: boolean
 	output_ndi: boolean
@@ -65,6 +68,9 @@ export const INITIAL_STATE: VariablesSchema = {
 	video_playing: false,
 	video_time: '',
 	video_remaining: '',
+	scroll_active: false,
+	scroll_paused: false,
+	scroll_speed: 100,
 	output_program: false,
 	output_speaker: false,
 	output_ndi: false,
@@ -97,6 +103,9 @@ const NAMES: Record<VariableId, string> = {
 	video_playing: 'The video clip is playing (true/false)',
 	video_time: 'Where the video clip is, e.g. "1:05"',
 	video_remaining: 'Time left in the video clip, e.g. "-2:10" (empty until known)',
+	scroll_active: 'The slide on screen has scrolling text (true/false)',
+	scroll_paused: 'The scrolling text is paused (true/false)',
+	scroll_speed: 'Scrolling text speed in percent of the speed set in the designer (100 = as designed)',
 	output_program: 'Program screen on (true/false)',
 	output_speaker: 'Speaker notes screen on (true/false)',
 	output_ndi: 'NDI output on (true/false)',
@@ -114,6 +123,8 @@ const BOOLEANS = new Set<VariableId>([
 	'timer_running',
 	'video_loaded',
 	'video_playing',
+	'scroll_active',
+	'scroll_paused',
 	'output_program',
 	'output_speaker',
 	'output_ndi',
@@ -124,6 +135,7 @@ const NUMBERS = new Set<VariableId>([
 	'presentation_number',
 	'presentation_total',
 	'presentation_cued_number',
+	'scroll_speed',
 	'output_program_screen',
 	'output_speaker_screen',
 	'displays_count',
