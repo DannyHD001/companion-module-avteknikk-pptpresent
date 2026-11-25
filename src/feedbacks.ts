@@ -1,6 +1,6 @@
 import { combineRgb } from '@companion-module/base'
 import { OUTPUT_CHOICES, SCREEN_OUTPUT_CHOICES, screenChoices, type OutputId, type ScreenOutputId } from './actions.js'
-import type { TimerState } from './variables.js'
+import { secondsLeft, type TimerState } from './variables.js'
 import type ModuleInstance from './main.js'
 
 export const COLORS = {
@@ -22,6 +22,9 @@ export type FeedbacksSchema = {
 	presentation_cued: { type: 'boolean'; options: { number: number } }
 	timer_running: { type: 'boolean'; options: Record<string, never> }
 	timer_state: { type: 'boolean'; options: { state: TimerState } }
+	video_loaded: { type: 'boolean'; options: Record<string, never> }
+	video_playing: { type: 'boolean'; options: Record<string, never> }
+	video_ending: { type: 'boolean'; options: { seconds: number } }
 	output_on: { type: 'boolean'; options: { output: OutputId } }
 	output_screen: { type: 'boolean'; options: { output: ScreenOutputId; screen: string } }
 }
@@ -108,6 +111,32 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 				},
 			],
 			callback: (fb) => s.timer_state === fb.options.state,
+		},
+		video_loaded: {
+			type: 'boolean',
+			name: 'Video clip loaded',
+			description: 'The loaded presentation is a video clip',
+			defaultStyle: { bgcolor: COLORS.blue, color: COLORS.white },
+			options: [],
+			callback: () => s.video_loaded,
+		},
+		video_playing: {
+			type: 'boolean',
+			name: 'Video is playing',
+			defaultStyle: { bgcolor: COLORS.green, color: COLORS.white },
+			options: [],
+			callback: () => s.video_loaded && s.video_playing,
+		},
+		video_ending: {
+			type: 'boolean',
+			name: 'Video time left below',
+			description: 'The playing video clip has less than this much time left',
+			defaultStyle: { bgcolor: COLORS.red, color: COLORS.white },
+			options: [{ id: 'seconds', type: 'number', label: 'Seconds', default: 10, min: 1, max: 3600, asInteger: true }],
+			callback: (fb) => {
+				const left = secondsLeft(s.video_remaining)
+				return s.video_loaded && s.video_playing && left !== null && left < Number(fb.options.seconds)
+			},
 		},
 		output_on: {
 			type: 'boolean',

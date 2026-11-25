@@ -39,6 +39,7 @@ export type ActionsSchema = {
 	timer: { options: { mode: 'start' | 'stop' | 'toggle' | 'reset' } }
 	timer_add: { options: { seconds: number } }
 	output: { options: { output: OutputId; state: 'on' | 'off' | 'toggle' } }
+	video: { options: { mode: 'play' | 'pause' | 'toggle' | 'restart' } }
 	refresh: { options: Record<string, never> }
 }
 
@@ -183,6 +184,26 @@ export function UpdateActions(self: ModuleInstance): void {
 				const screen = String(action.options.screen ?? '').trim()
 				if (screen) self.send(`/output/${action.options.output}/screen`, [screen])
 			},
+		},
+		video: {
+			name: 'Video: play / pause / restart',
+			description:
+				'The loaded video clip (PPTPresent 0.1.17 or later). Play starts the show if it is not running; restart goes back to the beginning.',
+			options: [
+				{
+					id: 'mode',
+					type: 'dropdown',
+					label: 'Do',
+					default: 'toggle',
+					choices: [
+						{ id: 'play', label: 'Play' },
+						{ id: 'pause', label: 'Pause' },
+						{ id: 'toggle', label: 'Play or pause (toggle)' },
+						{ id: 'restart', label: 'Back to the start' },
+					],
+				},
+			],
+			callback: (action) => self.send(`/video/${action.options.mode}`),
 		},
 		refresh: {
 			name: 'Refresh feedback',

@@ -19,6 +19,10 @@ export type VariablesSchema = {
 	timer_state: TimerState
 	timer_limit: string
 	clock: string
+	video_loaded: boolean
+	video_playing: boolean
+	video_time: string
+	video_remaining: string
 	output_program: boolean
 	output_speaker: boolean
 	output_ndi: boolean
@@ -32,6 +36,13 @@ export type VariablesSchema = {
 }
 
 export type VariableId = keyof VariablesSchema
+
+/** Seconds left from a "time left" text like "-2:10" or "-1:02:03"; null when not known. */
+export function secondsLeft(text: string): number | null {
+	const m = /^-?(?:(\d+):)?(\d+):(\d{2})$/.exec(text.trim())
+	if (!m) return null
+	return Number(m[1] ?? 0) * 3600 + Number(m[2]) * 60 + Number(m[3])
+}
 
 /** What PPTPresent knows before any feedback has arrived. */
 export const INITIAL_STATE: VariablesSchema = {
@@ -50,6 +61,10 @@ export const INITIAL_STATE: VariablesSchema = {
 	timer_state: 'normal',
 	timer_limit: '',
 	clock: '',
+	video_loaded: false,
+	video_playing: false,
+	video_time: '',
+	video_remaining: '',
 	output_program: false,
 	output_speaker: false,
 	output_ndi: false,
@@ -78,6 +93,10 @@ const NAMES: Record<VariableId, string> = {
 	timer_state: 'Timer state: normal, warn (near the end) or over',
 	timer_limit: 'Speaker time, e.g. "15:00" (empty if none)',
 	clock: 'Time of day on the PPTPresent computer, e.g. "14:05"',
+	video_loaded: 'The loaded presentation is a video clip (true/false)',
+	video_playing: 'The video clip is playing (true/false)',
+	video_time: 'Where the video clip is, e.g. "1:05"',
+	video_remaining: 'Time left in the video clip, e.g. "-2:10" (empty until known)',
 	output_program: 'Program screen on (true/false)',
 	output_speaker: 'Speaker notes screen on (true/false)',
 	output_ndi: 'NDI output on (true/false)',
@@ -93,6 +112,8 @@ const NAMES: Record<VariableId, string> = {
 const BOOLEANS = new Set<VariableId>([
 	'show_running',
 	'timer_running',
+	'video_loaded',
+	'video_playing',
 	'output_program',
 	'output_speaker',
 	'output_ndi',

@@ -130,6 +130,38 @@ export function UpdatePresets(self: ModuleInstance): void {
 	}
 	presets.timer_limit = button('Speaker time', 'LIMIT\\n' + v('timer_limit'), [], [])
 
+	// Video clips
+	presets.video_toggle = button(
+		'Play / pause the video clip',
+		'VIDEO\\n' + v('video_time'),
+		[{ actionId: 'video', options: { mode: 'toggle' } }],
+		[
+			{ feedbackId: 'video_loaded', options: {}, style: { bgcolor: COLORS.blue, color: COLORS.white } },
+			{ feedbackId: 'video_playing', options: {}, style: { bgcolor: COLORS.green, color: COLORS.white } },
+		],
+	)
+	presets.video_play = button(
+		'Play the video clip',
+		'▶\\nPLAY',
+		[{ actionId: 'video', options: { mode: 'play' } }],
+		[{ feedbackId: 'video_playing', options: {}, style: { bgcolor: COLORS.green, color: COLORS.white } }],
+	)
+	presets.video_pause = button('Pause the video clip', '❚❚\\nPAUSE', [
+		{ actionId: 'video', options: { mode: 'pause' } },
+	])
+	presets.video_restart = button('Back to the start of the video clip', '⏮\\nSTART', [
+		{ actionId: 'video', options: { mode: 'restart' } },
+	])
+	presets.video_remaining = button(
+		'Video time left (red in the last 10 seconds)',
+		'LEFT\\n' + v('video_remaining'),
+		[],
+		[
+			{ feedbackId: 'video_playing', options: {}, style: { bgcolor: COLORS.green, color: COLORS.white } },
+			{ feedbackId: 'video_ending', options: { seconds: 10 }, style: { bgcolor: COLORS.red, color: COLORS.white } },
+		],
+	)
+
 	// Outputs
 	const outputs = [
 		['program', 'PROGRAM'],
@@ -231,6 +263,19 @@ export function UpdatePresets(self: ModuleInstance): void {
 					presets: ['timer_display', 'timer_toggle', 'timer_reset', 'timer_limit'],
 				},
 				{ id: 'timer_adjust', type: 'simple', name: 'Add or take away time', presets: timerAdjust },
+			],
+		},
+		{
+			id: 'video',
+			name: 'Video',
+			definitions: [
+				{
+					id: 'video_main',
+					type: 'simple',
+					name: 'Video clips',
+					description: 'Blue: a video is loaded. Green: it plays. Red: in its last 10 seconds.',
+					presets: ['video_toggle', 'video_play', 'video_pause', 'video_restart', 'video_remaining'],
+				},
 			],
 		},
 		{ id: 'outputs', name: 'Outputs', definitions: ['output_program', 'output_speaker', 'output_ndi'] },
